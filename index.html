@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Only For You ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:Poppins,sans-serif;
+  min-height:100vh;
+  color:#fff;
+  overflow-x:hidden;
+  background:
+    linear-gradient(rgba(0,0,0,.75),rgba(120,0,0,.6)),
+    black;
+  background-size:cover;
+  background-position:center;
+}
+
+/* LOCK SCREEN */
+.lock-screen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    linear-gradient(rgba(0,0,0,.55), rgba(120,0,0,.45)),
+    url("https://static.vecteezy.com/system/resources/thumbnails/059/897/545/small/romantic-hd-wallpapers-photo.jpg");
+  background-size:cover;
+  background-position:center;
+  z-index:10;
+}
+
+.lock-box{
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(14px);
+  padding:35px;border-radius:26px;
+  width:320px;text-align:center;
+}
+.lock-box input{
+  width:100%;padding:12px;border-radius:20px;
+  border:none;margin-top:12px;
+}
+.lock-box button{
+  margin-top:15px;padding:10px 26px;
+  border:none;border-radius:26px;
+  background:#fff;color:#7a0b14;font-weight:600;
+}
+
+/* MAIN */
+.content{display:none;max-width:760px;margin:auto;padding:30px}
+h1{text-align:center;font-family:'Playfair Display',serif}
+.subtitle{text-align:center;margin-bottom:22px;opacity:.9}
+
+/* COUNTDOWN */
+.countdown{display:flex;justify-content:center;gap:14px;margin-bottom:26px}
+.time{
+  background:rgba(255,255,255,.18);
+  padding:14px 18px;border-radius:18px;
+  text-align:center
+}
+
+/* CHAT */
+.chat{
+  background:#efe7dd;border-radius:26px;
+  padding:20px;color:#000;
+  box-shadow:0 20px 60px rgba(0,0,0,.35)
+}
+.bubble{
+  max-width:78%;padding:14px 16px;
+  border-radius:18px;margin-bottom:10px;
+  animation:fade .5s;line-height:1.55
+}
+.left{background:#fff}
+.right{background:#f0ffd8;margin-left:auto}
+
+/* INPUT */
+.input-area{display:flex;margin-top:10px}
+.input-area input{
+  flex:1;padding:12px;border-radius:20px;border:none
+}
+.input-area button{
+  margin-left:8px;width:46px;border-radius:50%;
+  border:none;background:#7a0b14;color:#fff;font-size:18px
+}
+
+/* CTA */
+.proposal{text-align:center;margin-top:34px;display:none}
+.proposal button{
+  padding:14px 32px;border:none;border-radius:30px;
+  background:#fff;color:#7a0b14;font-size:1rem
+}
+
+/* POPUPS */
+.popup,.oops,.final{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.65);
+  display:none;align-items:center;justify-content:center;
+  z-index:20
+}
+.box{
+  background:#fff;color:#7a0b14;
+  padding:38px;border-radius:26px;
+  width:330px;text-align:center
+}
+.choice{display:flex;gap:20px;justify-content:center;margin-top:20px}
+.yes{
+  background:#7a0b14;color:#fff;
+  padding:10px 22px;border-radius:22px;border:none
+}
+.no{
+  background:#ddd;color:#444;
+  padding:10px 22px;border-radius:22px;border:none;
+  position:relative
+}
+
+/* FLOATERS */
+.float{
+  position:fixed;bottom:-30px;font-size:22px;
+  animation:floatUp 8s linear infinite;opacity:.8
+}
+@keyframes floatUp{
+  from{transform:translateY(0)}
+  to{transform:translateY(-120vh);opacity:0}
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1}
+}
+</style>
+</head>
+
+<body>
+
+
+
+<!-- LOCK -->
+<div class="lock-screen" id="lock">
+  <div class="lock-box">
+    <h2>Only For You 🔐</h2>
+    <p>Enter your nickname</p>
+    <input id="pass" placeholder="type here">
+    <button onclick="unlock()">Unlock ❤️</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="content" id="content">
+  <h1>Happy Valentine’s Day ❤️</h1>
+  <p class="subtitle">You are not just my Valentine… you are my today, my tomorrow, my always.</p>
+
+  <div class="countdown">
+    <div class="time"><span id="d"></span><br>Days</div>
+    <div class="time"><span id="h"></span><br>Hours</div>
+    <div class="time"><span id="m"></span><br>Mins</div>
+    <div class="time"><span id="s"></span><br>Secs</div>
+  </div>
+
+  <div class="chat" id="chat">
+    <div class="bubble left">Hey… do you know something? 💭</div>
+  </div>
+
+  <div class="input-area">
+    <input id="reply" placeholder="Type here…">
+    <button onclick="send()">➤</button>
+  </div>
+
+  <div class="proposal" id="cta">
+    <button onclick="openProposal()">One last thing… 💌</button>
+  </div>
+</div>
+
+<!-- PROPOSAL -->
+<div class="popup" id="popup">
+  <div class="box">
+    <h2>Will you be my Valentine? ❤️‍🔥</h2>
+    <div class="choice">
+      <button class="yes" onclick="finalYes()">YES 💖</button>
+      <button class="no" id="no">NO 🙈</button>
+    </div>
+  </div>
+</div>
+
+<div class="oops" id="oops">
+  <div class="box">
+    <h2>Oops 😏</h2>
+    <p>You really thought there was another option?</p>
+    <p>OFCOURSE NOT!! Just go back and click YES, BEEECHHHHII ❤️</p>
+  <p>(This pop-up will close itself in 8seconds)</p>
+</div>
+</div>
+
+<div class="final" id="final">
+  <div class="box">
+    <h2>Come closer… ❤️</h2>
+    <p>
+      Not right now — but soon. When the distance finally disappears and you’re here with me in Bangalore, I want the world to slow down just for us. I think about quiet nights, shared breaths, and the way all this waiting will finally make sense when I get to pull you close. I’m saving every ounce of this longing for the moment I can finally say: you’re here… and you’re mine😍😘🥵.
+    </p>
+  </div>
+</div>
+
+<script>
+const secret="manavu";
+let replied=false,noCount=0;
+
+function unlock(){
+  if(pass.value.trim().toLowerCase()===secret){
+    lock.style.display="none";
+    content.style.display="block";
+    music.play();
+  }else alert("Wrong nickname 😏");
+}
+
+function send(){
+  if(!reply.value.trim())return;
+  chat.innerHTML+=`<div class="bubble right">${reply.value}</div>`;
+  reply.value="";
+  if(!replied){
+    setTimeout(()=>{
+      chat.innerHTML+=`<div class="bubble left">
+      I want you to know, from the deepest and quietest part of my heart, how rare you are to me. You make the noise in my mind softer, the heavy days lighter, and the ordinary moments feel like something worth holding onto. With you, love feels steady, safe, and intoxicating all at once. ❤️
+      </div>`;
+      chat.innerHTML+=`<div class="bubble left">I want you to know one last thing as well… click the button below. 💗</div>`;
+      cta.style.display="block";
+    },600);
+    replied=true;
+  }
+}
+
+function openProposal(){popup.style.display="flex";}
+
+no.addEventListener("mouseover",()=>{
+  noCount++;
+  no.style.left=Math.random()*120-60+"px";
+  no.style.top=Math.random()*80-40+"px";
+  if(noCount>2){
+    oops.style.display="flex";
+    setTimeout(()=>oops.style.display="none",8000);
+  }
+});
+
+function finalYes(){
+  popup.style.display="none";
+  final.style.display="flex";
+}
+
+const target=new Date("Feb 14, 2026 00:00:00").getTime();
+setInterval(()=>{
+  const now=new Date().getTime(),diff=target-now;
+  d.innerText=Math.floor(diff/(1000*60*60*24));
+  h.innerText=Math.floor(diff/(1000*60*60))%24;
+  m.innerText=Math.floor(diff/(1000*60))%60;
+  s.innerText=Math.floor(diff/1000)%60;
+},1000);
+
+// FLOATING HEARTS & ROSES
+setInterval(()=>{
+  const f=document.createElement("div");
+  f.className="float";
+  f.innerHTML=Math.random()>0.5?"❤️":"🌹";
+  f.style.left=Math.random()*100+"vw";
+  f.style.animationDuration=6+Math.random()*4+"s";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),10000);
+},600);
+</script>
+
+</body>
+</html>
