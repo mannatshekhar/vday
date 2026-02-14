@@ -250,7 +250,7 @@ function finalYes(){
   final.style.display="flex";
 }
 
-const target=new Date("Feb 14, 2026 00:00:00").getTime();
+const target = new Date(2026, 1, 14, 23, 59, 59).getTime();
 setInterval(()=>{
   const now=new Date().getTime(),diff=target-now;
   d.innerText=Math.floor(diff/(1000*60*60*24));
@@ -273,3 +273,4 @@ setInterval(()=>{
 
 </body>
 </html>
+
